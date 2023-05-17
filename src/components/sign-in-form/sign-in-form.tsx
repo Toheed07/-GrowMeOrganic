@@ -19,11 +19,8 @@ export default function SignIn() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
         const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
         const email = data.get('email')?.toString() ?? '';
         const password = data.get('password')?.toString() ?? '';
 
@@ -87,7 +84,7 @@ export default function SignIn() {
                     <Grid container>
                         <Grid item>
                             <Link href="/sign-up" variant="body1">
-                                "Don't have an account? Sign Up"
+                                Don't have an account? Sign Up
                             </Link>
                         </Grid>
                     </Grid>

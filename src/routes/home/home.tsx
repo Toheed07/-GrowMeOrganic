@@ -15,7 +15,7 @@ const Home = () => {
             <DepartmentList/>
           </div>
         </> :
-        <div>Log in to continue</div>}
+        <h2>Log in to continue</h2>}
     </>
   )
 }

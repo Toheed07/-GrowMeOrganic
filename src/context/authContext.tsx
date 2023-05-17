@@ -21,6 +21,7 @@ const AuthContext = React.createContext<AuthContextProps>({
   logout: () => Promise.resolve(),
 });
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   return useContext(AuthContext);
 }
@@ -37,11 +38,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const userId = user.uid;
-        console.log("id",userId);
         try {
           const userData = await fetchUser(userId);
           setCurrentUser(userData as User);
-          console.log(currentUser);
         } catch (error) {
           console.log("Error fetching user data:", error);
         }

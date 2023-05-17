@@ -34,15 +34,6 @@ export default function SignUp() {
             return;
         }
 
-        console.log({
-            name: data.get('name'),
-            email: data.get('email'),
-            phoneNumber: data.get('phoneNumber'),
-            password: data.get('password'),
-            confirmPassword: data.get('confirmPassword'),
-
-        });
-
         try {
             const user= await createAuthUserWithEmailAndPassword(email, password);
             if (user) {
@@ -71,9 +62,7 @@ export default function SignUp() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-
-                </Avatar>
+                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
@@ -96,7 +85,6 @@ export default function SignUp() {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
-                        autoFocus
                     />
                       <TextField
                         margin="normal"
@@ -107,7 +95,6 @@ export default function SignUp() {
                         name="phoneNumber"
                         type="number"
                         autoComplete="phoneNumber"
-                        autoFocus
                     />
                     <TextField
                         margin="normal"
@@ -140,7 +127,7 @@ export default function SignUp() {
                     <Grid container>
                         <Grid item>
                             <Link href="/sign-in" variant="body1">
-                                "Already have an account? Sign In"
+                                Already have an account? Sign In
                             </Link>
                         </Grid>
                     </Grid>

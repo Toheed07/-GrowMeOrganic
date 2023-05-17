@@ -1,120 +1,104 @@
-import React, { useState } from 'react';
-import { List, ListItem, ListItemText, Checkbox, Collapse } from '@mui/material';
-import { ExpandLess, ExpandMore } from '@mui/icons-material';
-// Define the models/interfaces for department and sub-department
-interface SubDepartment {
-  name: string;
-  selected: boolean;
-}
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { Checkbox, FormControlLabel, Accordion, AccordionSummary, AccordionDetails } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-interface Department {
-  department: string;
-  subDepartments: SubDepartment[];
-  selected: boolean;
-}
+export default function IndeterminateCheckbox() {
+  const [checkedDesign, setCheckedDesign] = React.useState([false, false, false]);
+  const [checkedCustomer, setCheckedCustomer] = React.useState([false, false]);
 
-const DepartmentList = () => {
-
-  const [departments, setDepartments] = useState<Department[]>([
-
-    {
-      department: 'customer_service',
-      subDepartments: [
-        { name: 'support', selected: false },
-        { name: 'customer_success', selected: false },
-      ],
-      selected: false,
-    },
-    {
-      department: 'design',
-      subDepartments: [
-        { name: 'graphic_design', selected: false },
-        { name: 'product_design', selected: false },
-        { name: 'web_design', selected: false },
-      ],
-      selected: false,
-    },
-  ]);
-
-  const handleDepartmentClick = (departmentIndex: number) => {
-    const updatedDepartments = [...departments];
-    const selectedDepartment = updatedDepartments[departmentIndex];
-    selectedDepartment.selected = !selectedDepartment.selected;
-
-    selectedDepartment.subDepartments.forEach((subDepartment) => {
-      subDepartment.selected = selectedDepartment.selected;
-    });
-
-    setDepartments(updatedDepartments);
+  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedDesign([event.target.checked, event.target.checked, event.target.checked]);
   };
 
-  const handleSubDepartmentClick = (departmentIndex: number, subDepartmentIndex: number) => {
-    const updatedDepartments = [...departments];
-    const selectedSubDepartment = updatedDepartments[departmentIndex].subDepartments[subDepartmentIndex];
-    selectedSubDepartment.selected = !selectedSubDepartment.selected;
-
-    // Check if all sub-departments of the department are selected
-    const allSubDepartmentsSelected = updatedDepartments[departmentIndex].subDepartments.every(
-      (subDepartment) => subDepartment.selected
-    );
-
-    // Update the selected status of the department based on the sub-departments' selection status
-    updatedDepartments[departmentIndex].selected = allSubDepartmentsSelected;
-
-    setDepartments(updatedDepartments);
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedDesign([event.target.checked, checkedDesign[1], checkedDesign[2]]);
   };
+
+  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedDesign([checkedDesign[0], event.target.checked, checkedDesign[2]]);
+  };
+
+  const handleChange4 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedDesign([checkedDesign[0], checkedDesign[1], event.target.checked]);
+  };
+
+  const handleChange5 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedCustomer([event.target.checked, event.target.checked]);
+  };
+
+  const handleChange6 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedCustomer([event.target.checked, checkedCustomer[1]]);
+  };
+
+  const handleChange7 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckedCustomer([checkedCustomer[0], event.target.checked]);
+  };
+
+  const design_children = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+      <FormControlLabel
+        label="graphic design"
+        control={<Checkbox checked={checkedDesign[0]} onChange={handleChange2} />}
+      />
+      <FormControlLabel
+        label="product design"
+        control={<Checkbox checked={checkedDesign[1]} onChange={handleChange3} />}
+      />
+      <FormControlLabel
+        label="web design"
+        control={<Checkbox checked={checkedDesign[2]} onChange={handleChange4} />}
+      />
+    </Box>
+  );
+
+  const customer_service_children = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+      <FormControlLabel
+        label="support"
+        control={<Checkbox checked={checkedCustomer[0]} onChange={handleChange6} />}
+      />
+      <FormControlLabel
+        label="customer success"
+        control={<Checkbox checked={checkedCustomer[1]} onChange={handleChange7} />}
+      />
+    </Box>
+  );
 
   return (
-    
-    <List>
-      {departments.map((department, departmentIndex) => (
-        <React.Fragment key={department.department}>
-          <ListItem
-            button
-            onClick={() => handleDepartmentClick(departmentIndex)}
-          >
-            <Checkbox
-              checked={department.selected}
-              disableRipple
-              color="primary"
-              edge="start"
-              tabIndex={-1}
-              inputProps={{ 'aria-labelledby': `department-label-${departmentIndex}` }}
-            />
-            <ListItemText id={`department-label-${departmentIndex}`} primary={department.department} />
-            {department.selected ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={department.selected} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {department.subDepartments.map((subDepartment, subDepartmentIndex) => (
-                <ListItem
-                  key={subDepartment.name}
-                  button
-                  onClick={() => handleSubDepartmentClick(departmentIndex, subDepartmentIndex)}
-                  sx={{ paddingLeft: 4 }}
-                >
-                  <Checkbox
-                    checked={subDepartment.selected}
-                    disableRipple
-                    color="primary"
-                    edge="start"
-                    tabIndex={-1}
-                    inputProps={{ 'aria-labelledby': `sub-department-label-${departmentIndex}-${subDepartmentIndex}` }}
-                  />
-                  <ListItemText
-                    id={`sub-department-label-${departmentIndex}-${subDepartmentIndex}`}
-                    primary={subDepartment.name}
-                  />
-                </ListItem>
-              ))}
-            </List>
-
-      </Collapse>
-    </React.Fragment>
-  ))}
-</List>
-);
-};
-
-
-export default DepartmentList;
+    <div>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel-design" id="panel-design-header">
+          <FormControlLabel
+            label="Design"
+            control={
+              <Checkbox
+                checked={checkedDesign[0] && checkedDesign[1] && checkedDesign[2]}
+                onChange={handleChange1}
+              />
+            }
+          />
+        </AccordionSummary>
+        <AccordionDetails>
+          {design_children}
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel-customer-service" id="panel-customer-service-header">
+          <FormControlLabel
+            label="Customer Service"
+            control={
+              <Checkbox
+                checked={checkedCustomer[0] && checkedCustomer[1]}
+                onChange={handleChange5}
+              />
+            }
+          />
+        </AccordionSummary>
+        <AccordionDetails>
+          {customer_service_children}
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+}

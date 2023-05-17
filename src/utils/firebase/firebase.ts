@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
   UserCredential,
 } from 'firebase/auth';
 import {
@@ -13,13 +12,6 @@ import {
   doc,
   getDoc,
   setDoc,
-  Firestore,
-  CollectionReference,
-  DocumentData,
-  writeBatch,
-  query,
-  getDocs,
-  DocumentSnapshot,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -31,7 +23,7 @@ const firebaseConfig = {
   appId: "1:426300694327:web:176c20f42677e7da8e44b2"
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 export const auth = getAuth();
 export const db = getFirestore();
@@ -55,7 +47,7 @@ export const createUserDocumentFromAuth = async (
         email,
         createdAt,
         ...additionalInformation,
-        phoneNumber: parseInt(additionalInformation.phoneNumber, 10), // Convert phoneNumber to an integer
+        phoneNumber: parseInt(additionalInformation.phoneNumber, 10),
       });
     } catch (error: any) {
       console.log('error creating the user', error.message);

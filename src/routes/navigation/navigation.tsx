@@ -99,15 +99,14 @@ function Navigation() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-
                             <MenuItem onClick={handleCloseNavMenu}>
                                 <Typography textAlign="center">
-                                    <Button sx={{ color: 'white' }} onClick={() => navigate("/")}>Home</Button>
+                                    Home
                                 </Typography>
                             </MenuItem>
-
                         </Menu>
                     </Box>
+
                     <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h5"
@@ -127,16 +126,14 @@ function Navigation() {
                     >
                         LOGO
                     </Typography>
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-
                         <Button
-
-                            onClick={handleCloseNavMenu}
+                            onClick={() => navigate("/")}
                             sx={{ my: 2, color: 'white', display: 'block' }}
                         >
-                            <Button sx={{ color: 'white' }} onClick={() => navigate("/")}>Home</Button>
+                            Home
                         </Button>
-
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
@@ -161,7 +158,6 @@ function Navigation() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-
                             <MenuItem onClick={handleCloseUserMenu}>
                                 <Typography textAlign="center">
                                     {currentUser ? (
@@ -169,10 +165,8 @@ function Navigation() {
                                     ) : (
                                         <Button sx={{ color: 'black' }} onClick={handleLogout}>LogIn</Button>
                                     )}
-
                                 </Typography>
                             </MenuItem>
-
                         </Menu>
                     </Box>
                 </Toolbar>
