@@ -64,7 +64,7 @@ export default function SignUp() {
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} />
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Sign up
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
